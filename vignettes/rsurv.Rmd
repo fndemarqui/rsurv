@@ -1,0 +1,53 @@
+---
+title: "Introduction to the R package rsurv"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the R package rsurv}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Example
+
+In the code below we show how to simulate a sample of type I right-censored survival data, assuming that the failure times are generated from an accelerated failure time model with loglogistic baseline distribution. In addition, assume that we wish to consider two
+exploratory variables, say age and sex, and we want to include an interaction effect between them. Such a task can be easily accomplished by using the function `raftreg()` along with the function `qllogis()` available in the package __flexsurv__.
+
+```{r example, message = FALSE}
+library(rsurv)
+library(survstan)
+library(flexsurv)
+
+set.seed(1234567890)
+
+n <-  1000
+tau <- 10  # maximum follow up time
+simdata <- data.frame(
+  age = rnorm(n),
+  sex = sample(c("f", "m"), size = n, replace = TRUE)
+) %>%
+  mutate(
+    t = raftreg(runif(n), ~ age*sex, beta = c(1, 2, -0.5), 
+                dist = "llogis", shape = 1.5, scale = 1),
+  ) %>%
+  rowwise() %>%
+  mutate(
+    time = min(t, tau),
+    status = as.numeric(time == t)
+  ) 
+
+glimpse(simdata)
+
+fit <- aftreg(
+  Surv(time, status) ~ age*sex,
+  data = simdata, dist = "loglogistic"
+)
+estimates(fit)
+
+```

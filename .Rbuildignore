@@ -1,0 +1,10 @@
+^rsurv\.Rproj$
+^\.Rproj\.user$
+^inst/stuff$
+^cran-comments\.md$
+^\.Rhistory$
+^\.Rbuildiginore$
+^\.gitiginore$
+^LICENSE\.md$
+^README\.Rmd$
+^\.github$

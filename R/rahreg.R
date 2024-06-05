@@ -1,0 +1,69 @@
+
+#' Random generation from accelerated hazard models
+#' @aliases rahreg
+#' @export
+#' @description Function to generate a random sample of survival data from accelerated hazard models.
+#' @param u a numeric vector of quantiles.
+#' @param formula formula specifying the linear predictors.
+#' @param baseline the name of the baseline survival distribution.
+#' @param beta vector of regression coefficients.
+#' @param dist an alternative way to specify the baseline survival distribution
+#' @param data data frame containing the covariates used to generate the survival times.
+#' @param ... further arguments passed to other methods.
+#' @return a numeric vector containing the generated random sample.
+#'
+#' @examples
+#' \donttest{
+#' library(rsurv)
+#' n <-  1000
+#' simdata <- data.frame(
+#'   age = rnorm(n),
+#'   sex = sample(c("f", "m"), size = n, replace = TRUE)
+#' ) %>%
+#'   mutate(
+#'     t = rahreg(runif(n), ~ age+sex, beta = c(1, 2),
+#'                 dist = "weibull", shape = 1.5, scale = 1),
+#'     c = runif(n, 0, 10)
+#'   ) %>%
+#'   rowwise() %>%
+#'   mutate(
+#'     time = min(t, c),
+#'     status = as.numeric(time == t)
+#'   )
+#' glimpse(simdata)
+#' }
+#'
+rahreg <- function(u, formula, baseline, beta, dist = NULL, data, ...){
+  if(!is.null(dist)){
+    baseline <- dist
+  }
+  if(missing(data)){
+    mf <- stats::model.frame(formula=formula)
+  }else{
+    mf <- stats::model.frame(formula=formula, data=data)
+  }
+
+  X <- stats::model.matrix(formula, data = mf, rhs = 1)[,-1, drop = FALSE]
+  n <- nrow(X)
+  p <- ncol(X)
+
+  if(p>0){
+    lp <- as.numeric(X%*%beta)
+  }else{
+    lp <- 0
+  }
+
+  off <- stats::model.offset(mf)
+  if(!is.null(off)){
+    lp <- lp + off
+  }
+
+  if(baseline == "exp"){
+    warning("The AH model with exponential baseline distribution is non-identifiable!")
+  }
+
+  # v <- u^exp(-lp)
+  # time <- qsurv(v, baseline, ...)*exp(lp)
+  time <- rEH(u, baseline = baseline, lp1 = lp, lp2 = 0, ...)
+  return(time)
+}

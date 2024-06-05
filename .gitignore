@@ -1,0 +1,10 @@
+.Rproj.user
+inst/stuff
+cran-comments.md
+.Rhistory
+.Rbuildiginore
+.gitiginore
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
