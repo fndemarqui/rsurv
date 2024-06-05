@@ -26,7 +26,8 @@ survival data with more complex structures, such as survival data with
 different types of censoring mechanisms, survival data with cure
 fraction, survival data with random effects (frailties), multivarite
 survival data, and competing risks survival data. Details about the R
-package rsurv can be found in Demarqui (2024) \<arXiv:2406.01750\>.
+package rsurv can be found in Demarqui (2024)
+[doi.org/10.48550/arXiv.2406.01750](doi.org/10.48550/arXiv.2406.01750).
 
 ## Installation
 
