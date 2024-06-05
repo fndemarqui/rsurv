@@ -10,7 +10,7 @@
 
 The R package rsurv is aimed for general survival data simulation
 purposes. The package is built under a new approach to simulate survival
-data that depends deeply on programming with dplyr. The proposed package
+data that depends deeply on the use of dplyr verbs. The proposed package
 allows simulations of survival data from a wide range of regression
 models, including accelerated failure time (AFT), proportional hazards
 (PH), proportional odds (PO), accelerated hazard (AH), Yang and Prentice
@@ -30,7 +30,7 @@ package rsurv can be found in Demarqui (2024) \<arXiv:2406.01750\>.
 
 ## Installation
 
-You can install the released version of survstan from
+You can install the released version of rsurv from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r

@@ -8,3 +8,6 @@ cran-comments.md
 .httr-oauth
 .DS_Store
 .quarto
+docs
+/doc/
+/Meta/
