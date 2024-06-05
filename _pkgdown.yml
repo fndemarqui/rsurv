@@ -1,4 +1,6 @@
 url: https://fndemarqui.github.io/rsurv/
 template:
   bootstrap: 5
+  params:
+    ganalytics: GTM-MTLR76T7
 
