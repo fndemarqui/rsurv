@@ -2,16 +2,16 @@
 #' @export
 #' @aliases bernoulli
 #' @description This function is used to specify different link functions for the count component of the mixture cure rate model.
-#' @param link desired link function; currently implemented links are: logit, probit, cloglog and cauchit.
+#' @param link desired link function; currently implemented links are: logit, probit, cloglog and cauchy.
 #' @return A list containing the codes associated with the count distribution assumed for the latent variable N and the chosen link.
 #'
-bernoulli <- function(link = c("logit", "probit", "cloglog", "cauchit")){
+bernoulli <- function(link = c("logit", "probit", "cloglog", "cauchy")){
   link <- match.arg(link)
   link <- switch(link,
                  logit = 1,
                  probit = 2,
                  cloglog = 3,
-                 cauchit = 4
+                 cauchy = 4
   )
   out <- list(count_dist = 1, link = link)
   return(out)

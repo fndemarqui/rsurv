@@ -24,7 +24,7 @@ inclusion of categorical variables and interaction terms. The functions
 implemented in the package rsurv can also be employed to simulate
 survival data with more complex structures, such as survival data with
 different types of censoring mechanisms, survival data with cure
-fraction, survival data with random effects (frailties), multivarite
+fraction, survival data with random effects (frailties), multivariate
 survival data, and competing risks survival data. Details about the R
 package rsurv can be found in Demarqui (2024)
 \<doi.org/10.48550/arXiv.2406.01750\>.

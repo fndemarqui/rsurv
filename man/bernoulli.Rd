@@ -4,10 +4,10 @@
 \alias{bernoulli}
 \title{Implemented link functions for the mixture cure rate model}
 \usage{
-bernoulli(link = c("logit", "probit", "cloglog", "cauchit"))
+bernoulli(link = c("logit", "probit", "cloglog", "cauchy"))
 }
 \arguments{
-\item{link}{desired link function; currently implemented links are: logit, probit, cloglog and cauchit.}
+\item{link}{desired link function; currently implemented links are: logit, probit, cloglog and cauchy.}
 }
 \value{
 A list containing the codes associated with the count distribution assumed for the latent variable N and the chosen link.
