@@ -48,3 +48,25 @@ jobs:
           clean: false
           branch: gh-pages
           folder: docs
+
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v4
+        with:
+          key: ${{ runner.os }}-primes
+          path: |
+            path/to/dependencies
+            some/other/dependencies
+
+      # Intermediate workflow steps
+
+      - name: Always Save Primes
+        id: cache-primes-save
+        if: always() && steps.cache-primes-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
+          path: |
+            path/to/dependencies
+            some/other/dependencies
+

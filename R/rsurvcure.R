@@ -60,11 +60,12 @@ invAp <- function(u, incidence, mu, zeta = NULL){
 #' @param kappa vector of regression coefficients associated with the incidence sub-model.
 #' @param zeta extra negative-binomial parameter.
 #' @param data a data.frame containing the explanatory covariates passed to the formula.
+#' @param ... further arguments passed to other methods.
 #' @return A vector with the values of the inverse of the desired probability generating function.
 #'
 inv_pgf <- function(formula,
                       incidence = "bernoulli",
-                      kappa = NULL, zeta = NULL, data){
+                      kappa = NULL, zeta = NULL, data, ...){
   if(missing(data)){
     mf <- stats::model.frame(formula=formula)
   }else{
@@ -74,7 +75,7 @@ inv_pgf <- function(formula,
     incidence <- get(incidence, mode = "function")
     incidence <- incidence()
   }
-  X <- stats::model.matrix(formula, data = mf, rhs = 1)
+  X <- stats::model.matrix(formula, data = mf, rhs = 1, ...)
   n <- nrow(X)
   u <- stats::runif(n)
   lp <- as.numeric(X%*%kappa)

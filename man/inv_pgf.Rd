@@ -4,7 +4,7 @@
 \alias{inv_pgf}
 \title{Inverse of the probability generating function}
 \usage{
-inv_pgf(formula, incidence = "bernoulli", kappa = NULL, zeta = NULL, data)
+inv_pgf(formula, incidence = "bernoulli", kappa = NULL, zeta = NULL, data, ...)
 }
 \arguments{
 \item{formula}{formula specifying the linear predictor for the incidence sub-model.}
@@ -16,6 +16,8 @@ inv_pgf(formula, incidence = "bernoulli", kappa = NULL, zeta = NULL, data)
 \item{zeta}{extra negative-binomial parameter.}
 
 \item{data}{a data.frame containing the explanatory covariates passed to the formula.}
+
+\item{...}{further arguments passed to other methods.}
 }
 \value{
 A vector with the values of the inverse of the desired probability generating function.
