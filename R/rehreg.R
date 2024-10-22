@@ -1,8 +1,8 @@
 
-rEH <- function(u, baseline, lp1, lp2, ...){
+rEH <- function(u, baseline, lp1, lp2, package, ...){
   k <- exp(lp1+lp2)
   v <- u^(1/k)
-  time <- qsurv(v, baseline, ...)*exp(lp1)
+  time <- qsurv(v, baseline, package, ...)*exp(lp1)
   return(time)
 }
 
@@ -17,13 +17,14 @@ rEH <- function(u, baseline, lp1, lp2, ...){
 #' @param beta vector of regression coefficients.
 #' @param phi vector of regression coefficients.
 #' @param dist an alternative way to specify the baseline survival distribution.
+#' @param package the name of the package where the assumed quantile function is implemented.
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
 #'
 #' @examples
-#' \donttest{
 #' library(rsurv)
+#' library(dplyr)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -40,9 +41,8 @@ rEH <- function(u, baseline, lp1, lp2, ...){
 #'     status = as.numeric(time == t)
 #'   )
 #' glimpse(simdata)
-#' }
 #'
-rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
+rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -52,7 +52,18 @@ rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
     mf <- stats::model.frame(formula=formula, data=data)
   }
 
-  X <- stats::model.matrix(formula, data = mf, rhs = 1)[,-1, drop = FALSE]
+  Terms <- stats::terms(mf)
+  contrast.arg <- NULL
+  has.intercept <- attr(Terms, "intercept")
+  attr(Terms, "intercept") <- 1
+  X <- stats::model.matrix(Terms, mf, constrasts.arg=contrast.arg)
+  Xatt <- attributes(X)
+  adrop <- 0
+  if(has.intercept == 0){
+    warning("Provided formula not allowed! Using ", stats::update.formula(formula,  ~ . +1), " instead. Please, review the choice of your regression coefficients accordingly.")
+  }
+  xdrop <- Xatt$assign %in% adrop  #columns to drop (always the intercept)
+  X <- X[, !xdrop, drop=FALSE]
   p <- ncol(X)
 
   if(p>0){
@@ -73,6 +84,6 @@ rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
     warning("The EH model with exponential baseline distribution is non-identifiable!")
   }
 
-  time <- rEH(u, baseline = baseline, lp1 = lp1, lp2 = lp2, ...)
+  time <- rEH(u, baseline = baseline, lp1 = lp1, lp2 = lp2, package = package, ...)
   return(time)
 }

@@ -4,7 +4,7 @@
 \alias{rphreg}
 \title{Random generation from proportional hazards models}
 \usage{
-rphreg(u, formula, baseline, beta, dist = NULL, data, ...)
+rphreg(u, formula, baseline, beta, dist = NULL, package = NULL, data, ...)
 }
 \arguments{
 \item{u}{a numeric vector of quantiles.}
@@ -15,7 +15,9 @@ rphreg(u, formula, baseline, beta, dist = NULL, data, ...)
 
 \item{beta}{vector of regression coefficients.}
 
-\item{dist}{an alternative way to specify the baseline survival distribution}
+\item{dist}{an alternative way to specify the baseline survival distribution.}
+
+\item{package}{the name of the package where the assumed quantile function is implemented.}
 
 \item{data}{data frame containing the covariates used to generate the survival times.}
 
@@ -28,8 +30,8 @@ a numeric vector containing the generated random sample.
 Function to generate a random sample of survival data from proportional hazards models.
 }
 \examples{
-\donttest{
 library(rsurv)
+library(dplyr)
 n <-  1000
 simdata <- data.frame(
   age = rnorm(n),
@@ -46,6 +48,5 @@ simdata <- data.frame(
     status = as.numeric(time == t)
   )
 glimpse(simdata)
-}
 
 }

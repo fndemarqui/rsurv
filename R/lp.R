@@ -6,12 +6,11 @@
 #' @param formula formula specifying the linear predictors.
 #' @param coefs vector of regression coefficients.
 #' @param data data frame containing the covariates used to construct the linear predictors.
-#' @param ... further arguments passed to other methods.
-#' @return a vector containing the linear predictors
+#' @return a vector containing the linear predictors.
 #'
 #' @examples
-#' \donttest{
 #' library(rsurv)
+#' library(dplyr)
 #'
 #' n <- 100
 #' coefs <- c(1, 0.7, 2.3)
@@ -24,10 +23,9 @@
 #'     lp = lp(~age+sex, coefs)
 #'   )
 #' glimpse(simdata)
-#' }
 #'
 
-lp <- function(formula, coefs, data, ...){
+lp <- function(formula, coefs, data){
   if(missing(data)){
     mf <- stats::model.frame(formula=formula)
   }else{

@@ -1,5 +1,5 @@
 
-rYP <- function(u, baseline, lp_short, lp_long, ...){
+rYP <- function(u, baseline, lp_short, lp_long, package, ...){
   # lp_short = lp_long: PH
   # lp_long = 0: PO
   # lp_short != lp_long: YP
@@ -7,7 +7,7 @@ rYP <- function(u, baseline, lp_short, lp_long, ...){
   kappa <- exp(lp_long)
   w <- (u^(-1/kappa ) - 1)*ratio
   v <- 1/(1 + w)
-  time <- qsurv(v, baseline, ...)
+  time <- qsurv(v, baseline, package, ...)
   return(time)
 }
 
@@ -22,13 +22,14 @@ rYP <- function(u, baseline, lp_short, lp_long, ...){
 #' @param beta vector of short-term regression coefficients.
 #' @param phi vector of long-term regression coefficients.
 #' @param dist an alternative way to specify the baseline survival distribution.
+#' @param package the name of the package where the assumed quantile function is implemented.
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
 #'
 #' @examples
-#' \donttest{
 #' library(rsurv)
+#' library(dplyr)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -45,9 +46,8 @@ rYP <- function(u, baseline, lp_short, lp_long, ...){
 #'     status = as.numeric(time == t)
 #'   )
 #' glimpse(simdata)
-#' }
 #'
-rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
+rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -57,7 +57,18 @@ rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
     mf <- stats::model.frame(formula=formula, data=data)
   }
 
-  X <- stats::model.matrix(formula, data = mf, rhs = 1)[,-1, drop = FALSE]
+  Terms <- stats::terms(mf)
+  contrast.arg <- NULL
+  has.intercept <- attr(Terms, "intercept")
+  attr(Terms, "intercept") <- 1
+  X <- stats::model.matrix(Terms, mf, constrasts.arg=contrast.arg)
+  Xatt <- attributes(X)
+  adrop <- 0
+  if(has.intercept == 0){
+    warning("Provided formula not allowed! Using ", stats::update.formula(formula,  ~ . +1), " instead. Please, review the choice of your regression coefficients accordingly.")
+  }
+  xdrop <- Xatt$assign %in% adrop  #columns to drop (always the intercept)
+  X <- X[, !xdrop, drop=FALSE]
   p <- ncol(X)
 
   if(p>0){
@@ -74,6 +85,6 @@ rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, data, ...){
     lp_long <- lp_long + off
   }
 
-  time <- rYP(u, baseline = baseline, lp_short = lp_short, lp_long = lp_long, ...)
+  time <- rYP(u, baseline = baseline, lp_short = lp_short, lp_long = lp_long, package = package, ...)
   return(time)
 }

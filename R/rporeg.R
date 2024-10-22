@@ -8,14 +8,15 @@
 #' @param formula formula specifying the linear predictors.
 #' @param baseline the name of the baseline survival distribution.
 #' @param beta vector of regression coefficients.
-#' @param dist an alternative way to specify the baseline survival distribution
+#' @param dist an alternative way to specify the baseline survival distribution.
+#' @param package the name of the package where the assumed quantile function is implemented.
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
 #'
 #' @examples
-#' \donttest{
 #' library(rsurv)
+#' library(dplyr)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -32,9 +33,8 @@
 #'     status = as.numeric(time == t)
 #'   )
 #' glimpse(simdata)
-#' }
 #'
-rporeg <- function(u, formula, baseline, beta, dist = NULL, data, ...){
+rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data, ...){
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -44,7 +44,18 @@ rporeg <- function(u, formula, baseline, beta, dist = NULL, data, ...){
     mf <- stats::model.frame(formula=formula, data=data)
   }
 
-  X <- stats::model.matrix(formula, data = mf, rhs = 1)[,-1, drop = FALSE]
+  Terms <- stats::terms(mf)
+  contrast.arg <- NULL
+  has.intercept <- attr(Terms, "intercept")
+  attr(Terms, "intercept") <- 1
+  X <- stats::model.matrix(Terms, mf, constrasts.arg=contrast.arg)
+  Xatt <- attributes(X)
+  adrop <- 0
+  if(has.intercept == 0){
+    warning("Provided formula not allowed! Using ", stats::update.formula(formula,  ~ . +1), " instead. Please, review the choice of your regression coefficients accordingly.")
+  }
+  xdrop <- Xatt$assign %in% adrop  #columns to drop (always the intercept)
+  X <- X[, !xdrop, drop=FALSE]
   p <- ncol(X)
 
   if(p>0){
@@ -58,6 +69,6 @@ rporeg <- function(u, formula, baseline, beta, dist = NULL, data, ...){
     lp <- lp + off
   }
 
-  time <- rYP(u, baseline = baseline, lp_short = lp, lp_long = 0, ...)
+  time <- rYP(u, baseline = baseline, lp_short = lp, lp_long = 0, package = package, ...)
   return(time)
 }

@@ -4,7 +4,7 @@
 \alias{lp}
 \title{Linear predictors}
 \usage{
-lp(formula, coefs, data, ...)
+lp(formula, coefs, data)
 }
 \arguments{
 \item{formula}{formula specifying the linear predictors.}
@@ -12,18 +12,16 @@ lp(formula, coefs, data, ...)
 \item{coefs}{vector of regression coefficients.}
 
 \item{data}{data frame containing the covariates used to construct the linear predictors.}
-
-\item{...}{further arguments passed to other methods.}
 }
 \value{
-a vector containing the linear predictors
+a vector containing the linear predictors.
 }
 \description{
 Function to construct linear predictors.
 }
 \examples{
-\donttest{
 library(rsurv)
+library(dplyr)
 
 n <- 100
 coefs <- c(1, 0.7, 2.3)
@@ -36,6 +34,5 @@ simdata <- data.frame(
     lp = lp(~age+sex, coefs)
   )
 glimpse(simdata)
-}
 
 }

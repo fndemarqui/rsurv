@@ -3,7 +3,7 @@
 \name{rsurv-package}
 \alias{rsurv-package}
 \alias{rsurv}
-\title{The 'rsurv' package.}
+\title{The 'rsurv' package}
 \description{
 Random generation of survival data based on different survival regression models available in the literature, including Accelerated Failure Time (AFT) model, Proportional Hazard (PH) model, Proportional Odds (PO) model and the Yang & Prentice (YP) model.
 

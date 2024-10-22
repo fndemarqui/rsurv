@@ -4,7 +4,7 @@
 \alias{rypreg}
 \title{Random generation from Yang and Prentice models}
 \usage{
-rypreg(u, formula, baseline, beta, phi, dist = NULL, data, ...)
+rypreg(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...)
 }
 \arguments{
 \item{u}{a numeric vector of quantiles.}
@@ -19,6 +19,8 @@ rypreg(u, formula, baseline, beta, phi, dist = NULL, data, ...)
 
 \item{dist}{an alternative way to specify the baseline survival distribution.}
 
+\item{package}{the name of the package where the assumed quantile function is implemented.}
+
 \item{data}{data frame containing the covariates used to generate the survival times.}
 
 \item{...}{further arguments passed to other methods.}
@@ -30,8 +32,8 @@ a numeric vector containing the generated random sample.
 Function to generate a random sample of survival data from Yang and Prentice models.
 }
 \examples{
-\donttest{
 library(rsurv)
+library(dplyr)
 n <-  1000
 simdata <- data.frame(
   age = rnorm(n),
@@ -48,6 +50,5 @@ simdata <- data.frame(
     status = as.numeric(time == t)
   )
 glimpse(simdata)
-}
 
 }

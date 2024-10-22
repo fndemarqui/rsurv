@@ -4,7 +4,7 @@
 \alias{bernoulli}
 \title{Implemented link functions for the mixture cure rate model}
 \usage{
-bernoulli(link = c("logit", "probit", "cloglog", "cauchy"))
+bernoulli(link = "logit")
 }
 \arguments{
 \item{link}{desired link function; currently implemented links are: logit, probit, cloglog and cauchy.}

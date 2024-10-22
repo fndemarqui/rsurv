@@ -4,14 +4,7 @@
 \alias{inv_pgf}
 \title{Inverse of the probability generating function}
 \usage{
-inv_pgf(
-  formula,
-  incidence = c("bernoulli", "poisson", "negbin", "bell"),
-  kappa = NULL,
-  zeta = NULL,
-  data,
-  ...
-)
+inv_pgf(formula, incidence = "bernoulli", kappa = NULL, zeta = NULL, data)
 }
 \arguments{
 \item{formula}{formula specifying the linear predictor for the incidence sub-model.}
@@ -23,12 +16,10 @@ inv_pgf(
 \item{zeta}{extra negative-binomial parameter.}
 
 \item{data}{a data.frame containing the explanatory covariates passed to the formula.}
-
-\item{...}{further arguments passed to other methods.}
 }
 \value{
 A vector with the values of the inverse of the desired probability generating function.
 }
 \description{
-This function is used to specify different link functions for the count component of the promotion time cure rate model.
+This function is used to specify different link functions for the count component of the promotion time cure rate model
 }

@@ -21,6 +21,7 @@ exploratory variables, say age and sex, and we want to include an interaction ef
 
 ```{r example, message = FALSE}
 library(rsurv)
+library(dplyr)
 library(survstan)
 library(flexsurv)
 

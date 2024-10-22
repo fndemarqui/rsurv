@@ -13,7 +13,7 @@ rfrailty(
 )
 }
 \arguments{
-\item{cluster}{the variable to be entered as a random effect (always converted to a factor object internally).}
+\item{cluster}{a vector determining the grouping of subjects (always converted to a factor object internally.}
 
 \item{frailty}{the frailty distribution; current implementation includes the gamma (default), lognormal and positive stable (ps) distributions.}
 

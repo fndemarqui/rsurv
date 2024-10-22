@@ -2,11 +2,13 @@
 % Please edit documentation in R/rsurvcure.R
 \name{negbin}
 \alias{negbin}
-\title{Implemented link functions for the promotion time cure rate model with negative binomial distribution.}
+\title{Implemented link functions for the promotion time cure rate model with negative binomial distribution}
 \usage{
-negbin(link = c("log", "identity", "sqrt"))
+negbin(zeta = stop("'theta' must be specified"), link = "log")
 }
 \arguments{
+\item{zeta}{The known value of the additional parameter.}
+
 \item{link}{desired link function; currently implemented links are: log, identity and sqrt.}
 }
 \value{

@@ -1,7 +1,7 @@
 Package: rsurv
 Title: Random Generation of Survival Data 
-Version: 0.0.1
-Date: 2024-05-06
+Version: 0.0.2
+Date: 2024-06-06
 Authors@R: 
     person(given = "Fabio",
            family = "Demarqui",
@@ -12,11 +12,13 @@ Description: Random generation of survival data from a wide range of regression 
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Depends: 
-    dplyr,
     R (>= 3.4.0)
 Imports: 
+    bellreg,
+    dplyr,
+    MASS,
     Rdpack,
     stabledist,
 RdMacros: Rdpack
