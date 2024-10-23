@@ -11,6 +11,7 @@
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rsurv?color=orange)](https://cran.r-project.org/package=rsurv)
 <!-- [![R-CMD-check](https://github.com/fndemarqui/rsurv/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fndemarqui/rsurv/actions/workflows/R-CMD-check.yaml) -->
+[![R-CMD-check](https://github.com/fndemarqui/rsurv/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fndemarqui/rsurv/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The R package rsurv is aimed for general survival data simulation
