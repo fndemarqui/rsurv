@@ -1,72 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/404.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/articles/rsurv.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/bell.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/bernoulli.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/inv_pgf.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/lp.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/negbin.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/poisson.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/raftreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rahreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rehreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rfrailty.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rinterval.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rphreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rporeg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rsurv-package.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/rsurv/reference/rypreg.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://fndemarqui.github.io/rsurv/404.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/LICENSE.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/articles/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/articles/rsurv.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/authors.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/news/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/bernoulli.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/inv_pgf.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/lp.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/negbin.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/qsurv.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/raftreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rahreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rehreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rfrailty.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rinterval.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rphreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rporeg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rsurv-package.html</loc></url>
+<url><loc>https://fndemarqui.github.io/rsurv/reference/rypreg.html</loc></url>
 </urlset>
+
