@@ -16,7 +16,7 @@ RoxygenNote: 7.3.2
 Depends: 
     R (>= 3.4.0)
 Imports: 
-    bellreg (>= 0.0.2.1),
+    bellreg (>= 0.0.2.2),
     dplyr,
     MASS,
     Rdpack,
@@ -37,5 +37,4 @@ VignetteBuilder: knitr
 URL: https://github.com/fndemarqui/rsurv, https://fndemarqui.github.io/rsurv/
 BugReports: https://github.com/fndemarqui/rsurv/issues
 Config/testthat/edition: 3
-Remotes:  
-    fndemarqui/bellreg
+
