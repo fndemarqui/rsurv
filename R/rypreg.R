@@ -48,6 +48,7 @@ rYP <- function(u, baseline, lp_short, lp_long, package, ...){
 #' glimpse(simdata)
 #'
 rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
+  call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -86,5 +87,6 @@ rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL,
   }
 
   time <- rYP(u, baseline = baseline, lp_short = lp_short, lp_long = lp_long, package = package, ...)
+  attributes(time) <- list(call = call, model.matrix=X, beta = beta, phi = phi)
   return(time)
 }

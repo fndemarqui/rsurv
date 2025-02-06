@@ -34,6 +34,7 @@
 #' glimpse(simdata)
 #'
 rahreg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data, ...){
+  call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -75,5 +76,6 @@ rahreg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data
   # v <- u^exp(-lp)
   # time <- qsurv(v, baseline, ...)*exp(lp)
   time <- rEH(u, baseline = baseline, lp1 = lp, lp2 = 0, package = package, ...)
+  attributes(time) <- list(call = call, model.matrix=X, beta = beta)
   return(time)
 }

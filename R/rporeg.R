@@ -35,6 +35,7 @@
 #' glimpse(simdata)
 #'
 rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data, ...){
+  call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -70,5 +71,6 @@ rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data
   }
 
   time <- rYP(u, baseline = baseline, lp_short = lp, lp_long = 0, package = package, ...)
+  attributes(time) <- list(call = call, model.matrix=X, beta = beta)
   return(time)
 }

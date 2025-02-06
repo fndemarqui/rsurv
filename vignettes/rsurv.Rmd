@@ -14,16 +14,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Example
+In this document we show how to use the __rsurv__ package to simulate different types of right-censored survival data. 
 
-In the code below we show how to simulate a sample of type I right-censored survival data, assuming that the failure times are generated from an accelerated failure time model with loglogistic baseline distribution. In addition, assume that we wish to consider two
+## Type I right-censored survival data
+
+In the code below we show how to simulate a sample of Type I right-censored survival data, assuming that the failure times are generated from an accelerated failure time model with loglogistic baseline distribution. In addition, assume that we wish to consider two
 exploratory variables, say age and sex, and we want to include an interaction effect between them. Such a task can be easily accomplished by using the function `raftreg()` along with the function `qllogis()` available in the package __flexsurv__.
 
 ```{r example, message = FALSE}
 library(rsurv)
 library(dplyr)
 library(survstan)
-library(flexsurv)
 
 set.seed(1234567890)
 
@@ -35,7 +36,7 @@ simdata <- data.frame(
 ) %>%
   mutate(
     t = raftreg(runif(n), ~ age*sex, beta = c(1, 2, -0.5), 
-                dist = "llogis", shape = 1.5, scale = 1),
+                dist = "llogis", shape = 1.5, scale = 1, package = "flexsurv"),
   ) %>%
   rowwise() %>%
   mutate(
@@ -43,6 +44,7 @@ simdata <- data.frame(
     status = as.numeric(time == t)
   ) 
 
+# visualizing the simulated data:
 glimpse(simdata)
 
 fit <- aftreg(
@@ -52,3 +54,63 @@ fit <- aftreg(
 estimates(fit)
 
 ```
+
+## Type II right-censored survival data
+
+Suppose one wishes to simulate from accelerated failure test. In the example presented below we consider $n=20$ test units, with a pre-specified number of $m=15$ failures  (Type II right-censoring). A lognormal distributions with parameters $\mu = -1$ and $\sigma = 1$ is assumed for the baseline distribution. Temperature is considered as the acceleration factor. Specifically, we consider 4 levels of temperature (30, 60, 90, 120 $^{o}\mbox{C}$), and the following linear predictor is: $x\beta = -0.05\times \mbox{temperature}$.
+  
+```{r}
+library(rsurv)
+library(dplyr)
+
+set.seed(1234567890)
+n <- 20 # number of test units
+m <- 15 # number of failures
+
+#simulating the failure times:
+simdata <- data.frame(
+  temperature = rep(c(30, 60, 90, 120), each = 5)    
+) |>                                                                   
+  mutate(                                                            
+    t = raftreg(runif(n), ~ temperature, beta = -0.05, 
+                dist = "lnorm", meanlog = -1, sdlog = 1)                                          
+  ) |>
+  arrange(t) # sorting the generated data
+
+# obtaining 15-th failure time:
+tau <- simdata$t[m]
+
+# including type II censoring:
+simdata <- simdata |>
+  rowwise() |>
+  mutate(
+    time = min(t, tau),
+    status = as.numeric(time == t)
+  )
+simdata
+```
+
+## Type III (random censoring) right-censored survival data
+
+
+```{r}
+library(rsurv)
+library(dplyr)
+
+set.seed(1234567890)
+n <- 20
+covariates <- data.frame(
+  stage = sample(c("I", "II", "III", "IV"), size = n, replace = TRUE)
+) 
+
+simdata1 <- covariates |>
+  mutate(
+    time = rphreg(runif(n), ~stage, beta = c(0.2, 0.35, 1.2), dist = "weibull", shape = 2.3, scale = 1)
+  )
+glimpse(simdata1)
+
+att <- attributes(simdata1$time)
+str(att)
+unique(att$model.matrix)
+```
+

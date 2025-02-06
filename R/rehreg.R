@@ -43,6 +43,7 @@ rEH <- function(u, baseline, lp1, lp2, package, ...){
 #' glimpse(simdata)
 #'
 rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
+  call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
   }
@@ -85,5 +86,6 @@ rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL,
   }
 
   time <- rEH(u, baseline = baseline, lp1 = lp1, lp2 = lp2, package = package, ...)
+  attributes(time) <- list(call = call, model.matrix=X, beta = beta, phi = phi)
   return(time)
 }

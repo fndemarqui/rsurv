@@ -27,6 +27,7 @@
 #'
 
 lp <- function(formula, coefs, data, ...){
+  call <- match.call()
   if(missing(data)){
     mf <- stats::model.frame(formula=formula)
   }else{
@@ -34,5 +35,6 @@ lp <- function(formula, coefs, data, ...){
   }
   X <- stats::model.matrix(mf, ...)
   lp <- as.numeric(X%*%coefs)
+  attributes(lp) <- list(call = call, model.matrix=X, coefs = coefs)
   return(lp)
 }

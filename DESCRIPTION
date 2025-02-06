@@ -1,7 +1,7 @@
 Package: rsurv
 Title: Random Generation of Survival Data 
-Version: 0.0.2
-Date: 2024-06-06
+Version: 0.0.3
+Date: 2024-10-24
 Authors@R: 
     person(given = "Fabio",
            family = "Demarqui",
