@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   rsurv: rsurv.html
-last_built: 2024-10-24T08:16Z
+last_built: 2025-02-06T17:00Z
 urls:
   reference: https://fndemarqui.github.io/rsurv/reference
   article: https://fndemarqui.github.io/rsurv/articles
