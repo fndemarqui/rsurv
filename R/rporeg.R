@@ -10,6 +10,8 @@
 #' @param beta vector of regression coefficients.
 #' @param dist an alternative way to specify the baseline survival distribution.
 #' @param package the name of the package where the assumed quantile function is implemented.
+#' @param lwr left-truncation time (default to 0 in the absence of left-truncation).
+#' @param upr right-truncation time (default to Inf in the absence of right-truncation).
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
@@ -17,6 +19,7 @@
 #' @examples
 #' library(rsurv)
 #' library(dplyr)
+#' set.seed(123)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -34,7 +37,7 @@
 #'   )
 #' glimpse(simdata)
 #'
-rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data, ...){
+rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, lwr = 0, upr = Inf, data, ...){
   call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
@@ -70,7 +73,7 @@ rporeg <- function(u, formula, baseline, beta, dist = NULL, package = NULL, data
     lp <- lp + off
   }
 
-  time <- rYP(u, baseline = baseline, lp_short = lp, lp_long = 0, package = package, ...)
+  time <- rYP(u, baseline = baseline, lp_short = lp, lp_long = 0, package = package, lwr = lwr, upr = upr, ...)
   attributes(time) <- list(call = call, model.matrix=X, beta = beta)
   return(time)
 }

@@ -4,7 +4,19 @@
 \alias{rehreg}
 \title{Random generation from extended hazard models}
 \usage{
-rehreg(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...)
+rehreg(
+  u,
+  formula,
+  baseline,
+  beta,
+  phi,
+  dist = NULL,
+  package = NULL,
+  lwr = 0,
+  upr = Inf,
+  data,
+  ...
+)
 }
 \arguments{
 \item{u}{a numeric vector of quantiles.}
@@ -21,6 +33,10 @@ rehreg(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...)
 
 \item{package}{the name of the package where the assumed quantile function is implemented.}
 
+\item{lwr}{left-truncation time (default to 0 in the absence of left-truncation).}
+
+\item{upr}{right-truncation time (default to Inf in the absence of right-truncation).}
+
 \item{data}{data frame containing the covariates used to generate the survival times.}
 
 \item{...}{further arguments passed to other methods.}
@@ -34,6 +50,7 @@ Function to generate a random sample of survival data from extended hazard model
 \examples{
 library(rsurv)
 library(dplyr)
+set.seed(123)
 n <-  1000
 simdata <- data.frame(
   age = rnorm(n),

@@ -1,15 +1,5 @@
 
-rYP <- function(u, baseline, lp_short, lp_long, package, ...){
-  # lp_short = lp_long: PH
-  # lp_long = 0: PO
-  # lp_short != lp_long: YP
-  ratio <- exp(lp_long - lp_short)
-  kappa <- exp(lp_long)
-  w <- (u^(-1/kappa ) - 1)*ratio
-  v <- 1/(1 + w)
-  time <- qsurv(v, baseline, package, ...)
-  return(time)
-}
+
 
 
 #' Random generation from Yang and Prentice models
@@ -23,6 +13,8 @@ rYP <- function(u, baseline, lp_short, lp_long, package, ...){
 #' @param phi vector of long-term regression coefficients.
 #' @param dist an alternative way to specify the baseline survival distribution.
 #' @param package the name of the package where the assumed quantile function is implemented.
+#' @param lwr left-truncation time (default to 0 in the absence of left-truncation).
+#' @param upr right-truncation time (default to Inf in the absence of right-truncation).
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
@@ -30,6 +22,7 @@ rYP <- function(u, baseline, lp_short, lp_long, package, ...){
 #' @examples
 #' library(rsurv)
 #' library(dplyr)
+#' set.seed(123)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -47,7 +40,7 @@ rYP <- function(u, baseline, lp_short, lp_long, package, ...){
 #'   )
 #' glimpse(simdata)
 #'
-rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
+rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, lwr = 0, upr = Inf, data, ...){
   call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
@@ -86,7 +79,7 @@ rypreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL,
     lp_long <- lp_long + off
   }
 
-  time <- rYP(u, baseline = baseline, lp_short = lp_short, lp_long = lp_long, package = package, ...)
+  time <- rYP(u, baseline = baseline, lp_short = lp_short, lp_long = lp_long, package = package, lwr = lwr, upr = upr, ...)
   attributes(time) <- list(call = call, model.matrix=X, beta = beta, phi = phi)
   return(time)
 }

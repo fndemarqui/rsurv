@@ -1,29 +1,5 @@
 
-#' Generic quantile function
-#' @export
-#' @aliases qsurv
-#' @description
-#' Generic quantile function used internally to simulating from an arbitrary baseline survival distribution.
-#'
-#' @param p vector of quantiles associated with the right tail area of the baseline survival distribution.
-#' @param baseline the name of the baseline distribution.
-#' @param package the name of the package where the baseline distribution is implemented. It ensures that the right quantile function from the right package is found, regardless of the current R search path.
-#' @param ... further arguments passed to other methods.
-#' @return a vector of quantiles.
-#' @examples
-#'
-#' library(rsurv)
-#' set.seed(1234567890)
-#'
-#'
-#' u <- sort(runif(5))
-#' x1 <- qexp(u, rate = 1, lower.tail = FALSE)
-#' x2 <- qsurv(u, baseline = "exp", rate = 1)
-#' x3 <- qsurv(u, baseline = "exp", rate = 1, package = "stats")
-#' x4 <- qsurv(u, baseline = "gengamma.orig", shape=1, scale=1, k=1, package = "flexsurv")
-#'
-#' cbind(x1, x2, x3, x4)
-#'
+# Generic quantile function
 qsurv <- function (p, baseline, package = NULL, ...){
   if(is.null(package)){
     qfunc <- base::get(paste("q", baseline, sep = ""), mode = "function")
@@ -35,4 +11,79 @@ qsurv <- function (p, baseline, package = NULL, ...){
   return(x)
 }
 
+# Generic survival function for YP model
+surv_yp <- function(time, lp_short, lp_long, baseline, package, ...){
+  H0 <- bchaz(time, baseline, package, ...)
+  ratio <- exp(lp_short - lp_long)
+  Rt = expm1(H0)*ratio
+  theta <- exp(lp_long)
+  surv <- exp(-theta*log1p(Rt))
+  return(surv)
+}
 
+# Generic survival function for EH model
+surv_eh <- function(time, lp1, lp2, baseline, package, ...){
+  time <- time/exp(lp1)
+  H0 <- bchaz(time, baseline, package, ...)
+  surv <- exp(- H0*exp(lp1+lp2))
+  return(surv)
+}
+
+
+# Generic random generation for YP model
+rYP <- function (u, baseline, lp_short, lp_long, package, lwr, upr, ...){
+  # lp_short = lp_long: PH
+  # lp_long = 0: PO
+  # lp_short != lp_long: YP
+
+  #-----------------------------------------------------------------------------
+  # to handle truncation:
+  SL <- 1
+  SR <- 0
+  if(lwr>0){
+    SL <- surv_yp(lwr, lp_short, lp_long, baseline, package, ...)
+  }
+  if(lwr<Inf){
+    SR <- surv_yp(upr, lp_short, lp_long, baseline, package, ...)
+  }
+  u <- SL - (1-u)*(SL - SR) # truncation adjustment
+  ratio <- exp(lp_long - lp_short)
+  kappa <- exp(lp_long)
+  w <- (u^(-1/kappa) - 1) * ratio
+  v <- 1/(1 + w)
+  time <- qsurv(v, baseline, package, ...)
+  return(time)
+}
+
+# Generic random generation for EH model
+rEH <- function(u, baseline, lp1, lp2, package, lwr, upr, ...){
+  #-----------------------------------------------------------------------------
+  # to handle truncation:
+  SL <- 1
+  SR <- 0
+  if(lwr>0){
+    SL <- surv_eh(lwr, lp1, lp2, baseline, package, ...)
+  }
+  if(lwr<Inf){
+    SR <- surv_eh(upr, lp1, lp2, baseline, package, ...)
+  }
+  u <- SL - (1-u)*(SL - SR) # truncation adjustment
+  #-----------------------------------------------------------------------------
+  k <- exp(lp1+lp2)
+  v <- u^(1/k)
+  time <- qsurv(v, baseline, package, ...)*exp(lp1)
+  return(time)
+}
+
+
+# Generic cumulative hazard function
+bchaz <- function (x, baseline, package = NULL, ...){
+  if(is.null(package)){
+    pfunc <- base::get(paste("p", baseline, sep = ""), mode = "function")
+  }else{
+    baseline <- paste0("p", baseline)
+    pfunc <- utils::getFromNamespace(baseline, package)
+  }
+  H <- -pfunc(x, lower.tail = FALSE, log.p = TRUE, ...)
+  return(H)
+}

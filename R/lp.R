@@ -19,7 +19,7 @@
 #' simdata <- data.frame(
 #'   age = rnorm(n),
 #'   sex = sample(c("male", "female"), size = n, replace = TRUE)
-#' ) |>
+#' ) %>%
 #'   mutate(
 #'     lp = lp(~age+sex, coefs)
 #'   )

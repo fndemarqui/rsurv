@@ -1,10 +1,5 @@
 
-rEH <- function(u, baseline, lp1, lp2, package, ...){
-  k <- exp(lp1+lp2)
-  v <- u^(1/k)
-  time <- qsurv(v, baseline, package, ...)*exp(lp1)
-  return(time)
-}
+
 
 
 #' Random generation from extended hazard models
@@ -18,6 +13,8 @@ rEH <- function(u, baseline, lp1, lp2, package, ...){
 #' @param phi vector of regression coefficients.
 #' @param dist an alternative way to specify the baseline survival distribution.
 #' @param package the name of the package where the assumed quantile function is implemented.
+#' @param lwr left-truncation time (default to 0 in the absence of left-truncation).
+#' @param upr right-truncation time (default to Inf in the absence of right-truncation).
 #' @param data data frame containing the covariates used to generate the survival times.
 #' @param ... further arguments passed to other methods.
 #' @return a numeric vector containing the generated random sample.
@@ -25,6 +22,7 @@ rEH <- function(u, baseline, lp1, lp2, package, ...){
 #' @examples
 #' library(rsurv)
 #' library(dplyr)
+#' set.seed(123)
 #' n <-  1000
 #' simdata <- data.frame(
 #'   age = rnorm(n),
@@ -42,7 +40,7 @@ rEH <- function(u, baseline, lp1, lp2, package, ...){
 #'   )
 #' glimpse(simdata)
 #'
-rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, data, ...){
+rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL, lwr = 0, upr = Inf, data, ...){
   call <- match.call()
   if(!is.null(dist)){
     baseline <- dist
@@ -85,7 +83,7 @@ rehreg <- function(u, formula, baseline, beta, phi, dist = NULL, package = NULL,
     warning("The EH model with exponential baseline distribution is non-identifiable!")
   }
 
-  time <- rEH(u, baseline = baseline, lp1 = lp1, lp2 = lp2, package = package, ...)
+  time <- rEH(u, baseline = baseline, lp1 = lp1, lp2 = lp2, package = package, lwr = lwr, upr = upr, ...)
   attributes(time) <- list(call = call, model.matrix=X, beta = beta, phi = phi)
   return(time)
 }
