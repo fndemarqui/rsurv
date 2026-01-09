@@ -4,9 +4,9 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
+    branches:  [main, master]
 
-name: R-CMD-check. yaml
+name:  R-CMD-check. yaml
 
 permissions:  read-all
 
@@ -33,30 +33,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses:  r-lib/actions/setup-pandoc@v2
+      - uses:   r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version:  ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
+          r-version:  ${{ matrix.config. r }}
+          http-user-agent: ${{ matrix.config. http-user-agent }}
           use-public-rspm: true
+
+      - name: Install pak
+        run: |
+          install.packages("pak")
+        shell:  Rscript {0}
 
       - name: Show DESCRIPTION file
         run: cat DESCRIPTION
         shell: bash
 
-      - name:  Check dependency resolution
-        run: |
+      - name:   Check dependency resolution
+        run:  |
           Rscript -e 'print(sessionInfo())'
           Rscript -e 'pak::pak(".", ask = FALSE, upgrade = TRUE)'
-        continue-on-error: true
+        continue-on-error:  true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses:  r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses:  r-lib/actions/check-r-package@v2
+      - uses:   r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
           build_args:  'c("--no-manual","--compact-vignettes=gs+qpdf")'
