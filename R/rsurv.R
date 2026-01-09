@@ -43,7 +43,7 @@ rYP <- function (u, baseline, lp_short, lp_long, package, lwr, upr, ...){
   if(lwr>0){
     SL <- surv_yp(lwr, lp_short, lp_long, baseline, package, ...)
   }
-  if(lwr<Inf){
+  if(upr<Inf){
     SR <- surv_yp(upr, lp_short, lp_long, baseline, package, ...)
   }
   u <- SL - (1-u)*(SL - SR) # truncation adjustment
@@ -64,7 +64,7 @@ rEH <- function(u, baseline, lp1, lp2, package, lwr, upr, ...){
   if(lwr>0){
     SL <- surv_eh(lwr, lp1, lp2, baseline, package, ...)
   }
-  if(lwr<Inf){
+  if(upr<Inf){
     SR <- surv_eh(upr, lp1, lp2, baseline, package, ...)
   }
   u <- SL - (1-u)*(SL - SR) # truncation adjustment
