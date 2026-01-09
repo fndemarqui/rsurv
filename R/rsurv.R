@@ -29,7 +29,6 @@ surv_eh <- function(time, lp1, lp2, baseline, package, ...){
   return(surv)
 }
 
-
 # Generic random generation for YP model
 rYP <- function (u, baseline, lp_short, lp_long, package, lwr, upr, ...){
   # lp_short = lp_long: PH
@@ -40,10 +39,10 @@ rYP <- function (u, baseline, lp_short, lp_long, package, lwr, upr, ...){
   # to handle truncation:
   SL <- 1
   SR <- 0
-  if(lwr>0){
+  if(any(lwr>0)){
     SL <- surv_yp(lwr, lp_short, lp_long, baseline, package, ...)
   }
-  if(upr<Inf){
+  if(any(upr<Inf)){
     SR <- surv_yp(upr, lp_short, lp_long, baseline, package, ...)
   }
   u <- SL - (1-u)*(SL - SR) # truncation adjustment
@@ -55,16 +54,17 @@ rYP <- function (u, baseline, lp_short, lp_long, package, lwr, upr, ...){
   return(time)
 }
 
+
 # Generic random generation for EH model
 rEH <- function(u, baseline, lp1, lp2, package, lwr, upr, ...){
   #-----------------------------------------------------------------------------
   # to handle truncation:
   SL <- 1
   SR <- 0
-  if(lwr>0){
+  if(any(lwr>0)){
     SL <- surv_eh(lwr, lp1, lp2, baseline, package, ...)
   }
-  if(upr<Inf){
+  if(any(upr<Inf)){
     SR <- surv_eh(upr, lp1, lp2, baseline, package, ...)
   }
   u <- SL - (1-u)*(SL - SR) # truncation adjustment
