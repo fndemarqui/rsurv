@@ -26,3 +26,5 @@ CRAN release: 2024-10-25
   regression coefficients);
 - The functions `r*reg()` now can simulate left, right and
   double-truncated survival data.
+- Implementation of fatigue (Birnbaum-Saunders), Rayleigh, and
+  loglogistic distributions.
