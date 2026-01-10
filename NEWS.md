@@ -14,3 +14,4 @@
 
 * The functions `r*reg()` now returns the vector of failure times accompanied by a set of attributes (call, model.matrix, and vector of regression coefficients);
 * The functions `r*reg()` now can simulate left, right and double-truncated survival data.
+* Implementation of fatigue (Birnbaum-Saunders), Rayleigh, and loglogistic distributions.
