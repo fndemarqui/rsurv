@@ -51,6 +51,11 @@ devtools::install_github("fndemarqui/rsurv")
   : The Birnbaum-Saunders (Fatigue Life) Distribution
 - [`inv_pgf()`](https://fndemarqui.github.io/rsurv/reference/inv_pgf.md)
   : Inverse of the probability generating function
+- [`dloglogistic()`](https://fndemarqui.github.io/rsurv/reference/loglogistic.md)
+  [`ploglogistic()`](https://fndemarqui.github.io/rsurv/reference/loglogistic.md)
+  [`qloglogistic()`](https://fndemarqui.github.io/rsurv/reference/loglogistic.md)
+  [`rloglogistic()`](https://fndemarqui.github.io/rsurv/reference/loglogistic.md)
+  : The Log-Logistic Distribution
 - [`lp()`](https://fndemarqui.github.io/rsurv/reference/lp.md) : Linear
   predictors
 - [`negbin()`](https://fndemarqui.github.io/rsurv/reference/negbin.md) :
