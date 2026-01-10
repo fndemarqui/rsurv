@@ -27,12 +27,9 @@ RdMacros: Rdpack
 Suggests: 
     copula,
     flexsurv,
-    frailtyEM,
-    GGally,
     knitr,
     LambertW,
     rmarkdown,
-    survival,
     survstan,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
