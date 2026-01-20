@@ -50,12 +50,6 @@ jobs:
         run: cat DESCRIPTION
         shell: bash
 
-      - name:   Check dependency resolution
-        run:  |
-          Rscript -e 'print(sessionInfo())'
-          Rscript -e 'pak::pak(".", ask = FALSE, upgrade = TRUE)'
-        continue-on-error:  true
-
       - uses:  r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
