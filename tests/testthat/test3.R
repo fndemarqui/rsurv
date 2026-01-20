@@ -18,15 +18,15 @@ v <- inv_pgf(
   data = simdata
 )
 
-simdata <- simdata |>
+simdata <- simdata %>%
   mutate(
     t = qexp(v, rate = 1, lower.tail = FALSE),
     c = rexp(n, rate = 1)
-  ) |>
-  rowwise() |>
+  ) %>%
+  rowwise() %>%
   mutate(
     time = min(t, c),
     status = as.numeric(time == t)
-  ) |>
+  ) %>%
   select(-c(t, c))
 
