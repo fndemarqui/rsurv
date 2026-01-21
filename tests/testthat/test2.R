@@ -1,5 +1,6 @@
 
 library(rsurv)
+library(dplyr)
 
 n <- 100
 simdata <- data.frame(
