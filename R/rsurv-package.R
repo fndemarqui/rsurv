@@ -6,12 +6,12 @@
 #' @name rsurv-package
 #' @aliases rsurv
 #' @import dplyr
+#' @import Rdpack 
 #' @importFrom bellreg bell
 #' @importFrom dplyr %>%
 #' @importFrom Rdpack insert_ref
 #'
 #' @references
-#'
 #' \insertRef{2021_Demarqui}{rsurv}
 #'
 #' \insertRef{2005_YangPrentice}{rsurv}
