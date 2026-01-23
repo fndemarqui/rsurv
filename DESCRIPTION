@@ -1,7 +1,7 @@
 Package: rsurv
 Title: Random Generation of Survival Data 
 Version: 0.0.3
-Date: 2026-01-22
+Date: 2026-01-23
 Author: Fabio Demarqui [aut, cre, cph] (<https://orcid.org/0000-0001-9236-1986>)
 Maintainer: Fabio Demarqui <fndemarqui@est.ufmg.br>
 Authors@R: 
